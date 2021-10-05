@@ -15,12 +15,12 @@ def review_encoder(text):
     return arr
 train_data,train_labels=imbd_reviews['reviews'],imdb_reviews['sentiment']
 test_data,test_labels=test_reviews['reviews'],test_reviews['sentiment']
-train_data=train_data.apply(lamda review:review.split())
-test_data=test_data.apply(lamda review:review.split())
+train_data=train_data.apply(lambda review:review.split())
+test_data=test_data.apply(lambda review:review.split())
 train_data=train_data(review_encoder)
 test_data=test_data(review_encoder)
 def encode_sentiments(sentiment):
-    if sentiment="postive":
+    if sentiment=="postive":
         return 1
     else:
         return 0
@@ -31,9 +31,9 @@ test_data=keras.preprocessing.pad_seguences(test_data,value=word_index["<pad"],p
 model=keras.sequentail([keras.layers.Embedding(1000,16,input_length=500),
                         keras.layers.GlobalaveragePooling1d(),
                         keras.layers.dense(16,activation='relu'),
-                        keras.layers.dense(1,activation='sigmoid')]
-model.compile(optimizer='adam',loss='binary_crossentropy',metrics=['accuracy'])
-history=model.fit(train_data,train_labels,epoch=30,batch_size512,validation_data(test_data,test_labels))
+                        keras.layers.dense(1,activation='sigmoid')])
+model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+history=model.fit(train_data,train_labels,epochs=30,batch_size=512,validation_data=(test_data,test_labels))
 loss,accuracy=model.evalute(test_data,test_labels)
 index=np.random.randint(1,1000)
 user_reviews=test_reviews.loc[index]
@@ -44,25 +44,3 @@ if (model.predict(user_reviews)>0.5).astype("int32"):
     print("postive sentiment")
 else:
     print("negative sentiment")
-    
-                       
-                       
-                       
-                                                                   
-                                                                   
-                                                                   
-                       
-                        
-        
-    
-    
-
-
-
-
-
-
-
-
-
-
