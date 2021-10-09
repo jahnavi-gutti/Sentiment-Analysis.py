@@ -9,7 +9,7 @@ word_index=dict(zip(word_index.Words,word_index.Indexes))
 word_index["<PAD>"]=0
 word_index["<START>"]=1
 word_index["<UNK>"]=2
-word_index["<UNSUED>"]=3
+word_index["<UNUSED>"]=3
 def review_encoder(text):
     arr=[word_index[word] for word in text]
     return arr
