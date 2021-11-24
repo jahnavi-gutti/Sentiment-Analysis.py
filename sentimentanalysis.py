@@ -28,19 +28,19 @@ train_labels=train_labels.apply(encode_sentiments)
 test_labels=test_labels.apply(encode_sentiments)
 train_data=keras.preprocessing.sequence.pad_sequences(train_data,value=word_index["<PAD"],padding='post',maxlen=500)
 test_data=keras.preprocessing.sequence.pad_sequences(test_data,value=word_index["<PAD"],padding='post',maxlen=500)
-model=keras.Sequential([keras.layers.Embedding(1000,16,input_length=500),
+model=keras.Sequential([keras.layers.Embedding(88585,16,input_length=500),
                         keras.layers.GlobalAveragePooling1D(),
                         keras.layers.Dense(16,activation='relu'),
                         keras.layers.Dense(1,activation='sigmoid')])
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 history=model.fit(train_data,train_labels,epochs=30,batch_size=512,validation_data=(test_data,test_labels))
-loss,accuracy=model.evalute(test_data,test_labels)
+loss,accuracy=model.evaluate(test_data,test_labels)
 index=np.random.randint(1,1000)
 user_reviews=test_reviews.loc[index]
-print(user_review)
+print(user_reviews)
 user_review=test_data[index]
 user_review=np.array([user_review])
-if (model.predict(user_reviews)>0.5).astype("int32"):
+if (model.predict(user_review)>0.5).astype("int32"):
     print("postive sentiment")
 else:
     print("negative sentiment")
